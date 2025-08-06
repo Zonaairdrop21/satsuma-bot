@@ -176,29 +176,6 @@ LIQUIDITY_ROUTER_ABI = [
     }
 ]
 
-# The ABI for the `create_lock` and `exit` function based on your input
-VESUMA_ABI_SUMA_TO_VESUMA = [
-    {
-        "name": "create_lock",
-        "inputs": [
-            {"name": "_value", "type": "uint256"},
-            {"name": "_unlock_time", "type": "uint256"}
-        ],
-        "outputs": [],
-        "type": "function"
-    }
-]
-
-VESUMA_ABI_VESUMA_TO_SUMA = [
-    {
-        "name": "exit",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    }
-]
-
 
 STAKING_ABI = [
     {
@@ -533,8 +510,8 @@ class SatsumaBot:
             
             selector = "0x12e82674"
             
-            # Encode the parameters for create_lock(uint256, uint256)
-            encoded_params = self.w3.eth.abi.encode(['uint256', 'uint256'], [amount_wei, unlock_time])
+            # Correcting the ABI encoding method from w3.eth.abi to w3.abi
+            encoded_params = self.w3.abi.encode(['uint256', 'uint256'], [amount_wei, unlock_time])
             
             # Combine the selector and the encoded parameters
             tx_data = selector + self.w3.to_hex(encoded_params)[2:]
@@ -542,7 +519,7 @@ class SatsumaBot:
             create_lock_tx = {
                 "from": account.address,
                 "to": self.config["vesuma_address"],
-                "gas": 400000,
+                "gas": 500000,
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce,
                 "data": tx_data
@@ -576,7 +553,6 @@ class SatsumaBot:
             account = self.w3.eth.account.from_key(private_key)
             log.info(f"Converting veSUMA to SUMA for {account.address}")
             
-            # Since the user-provided ABI for `exit` has no parameters, we assume a simple call
             # The selector for 'exit' is specified by the user as 0x7f8661a1
             selector = "0x7f8661a1"
             tx_data = selector
@@ -586,7 +562,7 @@ class SatsumaBot:
             exit_tx = {
                 "from": account.address,
                 "to": self.config["vesuma_address"],
-                "gas": 400000,
+                "gas": 500000,
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce,
                 "data": tx_data
