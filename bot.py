@@ -176,7 +176,7 @@ LIQUIDITY_ROUTER_ABI = [
     }
 ]
 
-# A simple ABI for `create_lock` to allow parameter encoding
+# The correct ABI for a standard `ve-token` contract's `create_lock` function
 VESUMA_ABI = [
     {
         "name": "create_lock",
@@ -184,12 +184,6 @@ VESUMA_ABI = [
             {"name": "_value", "type": "uint256"},
             {"name": "_unlock_time", "type": "uint256"}
         ],
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "name": "increase_amount",
-        "inputs": [{"name": "_value", "type": "uint256"}],
         "outputs": [],
         "type": "function"
     }
@@ -242,7 +236,6 @@ class SatsumaBot:
             "usdc_address": Web3.to_checksum_address("0x2C8abD2A528D19AFc33d2eBA507c0F405c131335"),
             "wcbtc_address": Web3.to_checksum_address("0x8d0c9d1c17ae5e40fff9be350f57840e9e66cd93"),
             "suma_address": Web3.to_checksum_address("0xdE4251dd68e1aD5865b14Dd527E54018767Af58a"),
-            # Updated veSUMA address as provided by the user
             "vesuma_address": Web3.to_checksum_address("0x97a4f684620D578312Dc9fFBc4b0EbD8E804ab4a"), 
             "voting_contract": Web3.to_checksum_address("0x1234567890123456789012345678901234567891"),
             "staking_contract": Web3.to_checksum_address("0x1234567890123456789012345678901234567892"),
@@ -383,8 +376,6 @@ class SatsumaBot:
             return None
 
     async def perform_swap(self, private_key, token_in, token_out, amount_in):
-        # NOTE: This function still uses multicall logic, which may not be compatible. 
-        # I'll leave it as is for now, but a full audit of all functions would be ideal.
         try:
             account = self.w3.eth.account.from_key(private_key)
             log.info(f"Performing swap for {account.address}")
@@ -526,30 +517,20 @@ class SatsumaBot:
             
             nonce = approve_result["nonce"]
             
-            # --- STEP 2: Manually build and send the create_lock transaction ---
-            log.processing("Manually building and sending veSUMA conversion transaction...")
+            # --- STEP 2: Send the create_lock transaction using the standard method ---
+            log.processing("Sending veSUMA conversion transaction...")
             
-            # The selector for 'create_lock(uint256, uint256)' is not 0x12e82674.
-            # We will manually encode the parameters and prepend the selector provided by the user.
+            vesuma_contract = self.w3.eth.contract(address=self.config["vesuma_address"], abi=VESUMA_ABI)
             
-            # Use a dummy contract to encode parameters for create_lock(uint256,uint256)
-            # This ensures the parameters are formatted correctly
-            dummy_contract = self.w3.eth.contract(address=self.config["vesuma_address"], abi=VESUMA_ABI)
-            # Encode the function call parameters
-            encoded_params = dummy_contract.encodeABI(fn_name='create_lock', args=[amount_wei, unlock_time])[10:]
-            
-            # The user specified 0x12e82674 as the method selector.
-            # We will use this directly and append the encoded parameters.
-            tx_data = "0x12e82674" + encoded_params.hex()
-            
-            create_lock_tx = {
+            create_lock_tx = vesuma_contract.functions.create_lock(
+                amount_wei,
+                unlock_time
+            ).build_transaction({
                 "from": account.address,
-                "to": self.config["vesuma_address"],
                 "gas": 400000,
                 "gasPrice": self.w3.eth.gas_price,
-                "nonce": nonce,
-                "data": tx_data
-            }
+                "nonce": nonce
+            })
             
             signed_tx = self.w3.eth.account.sign_transaction(create_lock_tx, private_key=private_key)
             tx_hash = self.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
