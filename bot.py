@@ -100,56 +100,32 @@ ERC20_ABI = [
     }
 ]
 
-# SWAP_ROUTER_ABI for multicall and swaps (retained but not used in the specific conversion logic)
 SWAP_ROUTER_ABI = [
     {
-        "inputs": [
-            {
-                "components": [
-                    {"internalType": "address", "name": "tokenIn", "type": "address"},
-                    {"internalType": "address", "name": "tokenOut", "type": "address"},
-                    {"internalType": "address", "name": "deployer", "type": "address"},
-                    {"internalType": "address", "name": "recipient", "type": "address"},
-                    {"internalType": "uint256", "name": "deadline", "type": "uint256"},
-                    {"internalType": "uint256", "name": "amountIn", "type": "uint256"},
-                    {"internalType": "uint256", "name": "amountOutMinimum", "type": "uint256"},
-                    {"internalType": "uint160", "name": "limitSqrtPrice", "type": "uint160"}
-                ],
-                "internalType": "struct ISwapRouter.ExactInputSingleParams",
-                "name": "exactInputSingle",
-                "type": "tuple"
-            }
-        ],
-        "name": "exactInputSingle",
-        "outputs": [{"internalType": "uint256", "name": "amountOut", "type": "uint256"}],
-        "stateMutability": "payable",
-        "type": "function"
+        "inputs": [{"internalType": "address", "name": "_factory", "type": "address"}, {"internalType": "address", "name": "_WNativeToken", "type": "address"}, {"internalType": "address", "name": "_poolDeployer", "type": "address"}],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
     },
-    {
-        "inputs": [{"internalType": "bytes[]", "name": "data", "type": "bytes[]"}],
-        "name": "multicall",
-        "outputs": [{"internalType": "bytes[]", "name": "results", "type": "bytes[]"}],
-        "stateMutability": "payable",
-        "type": "function"
-    },
-    {"inputs":[],"name":"WNativeToken","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
-    {"inputs":[{"internalType":"int256","name":"amount0Delta","type":"int256"},{"internalType":"int256","name":"amount1Delta","type":"int256"},{"internalType":"bytes","name":"_data","type":"bytes"}],"name":"algebraSwapCallback","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"components":[{"internalType":"bytes","name":"path","type":"bytes"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMinimum","type":"uint256"}],"internalType":"struct ISwapRouter.ExactInputParams","name":"params","type":"tuple"}],"name":"exactInput","outputs":[{"internalType":"uint256","name":"amountOut","type":"uint256"}],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"components":[{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"address","name":"tokenOut","type":"address"},{"internalType":"address","name":"deployer","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint256","name":"amountIn","type":"uint256"},{"internalType":"uint256","name":"amountOutMinimum","type":"uint256"},{"internalType":"uint160","name":"limitSqrtPrice","type":"uint160"}],"internalType":"struct ISwapRouter.ExactInputSingleParams","name":"params","type":"tuple"}],"name":"exactInputSingleSupportingFeeOnTransferTokens","outputs":[{"internalType":"uint256","name":"amountOut","type":"uint256"}],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"components":[{"internalType":"bytes","name":"path","type":"bytes"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint256","name":"amountOut","type":"uint256"},{"internalType":"uint256","name":"amountInMaximum","type":"uint256"}],"internalType":"struct ISwapRouter.ExactOutputParams","name":"params","type":"tuple"}],"name":"exactOutput","outputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"}],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"components":[{"internalType":"address","name":"tokenIn","type":"address"},{"internalType":"address","name":"tokenOut","type":"address"},{"internalType":"address","name":"deployer","name":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint256","name":"amountOut","type":"uint256"},{"internalType":"uint256","name":"amountInMaximum","type":"uint256"},{"internalType":"uint160","name":"limitSqrtPrice","type":"uint160"}],"internalType":"struct ISwapRouter.ExactOutputSingleParams","name":"params","type":"tuple"}],"name":"exactOutputSingle","outputs":[{"internalType":"uint256","name":"amountIn","type":"uint256"}],"stateMutability":"payable","type":"function"},
-    {"inputs":[],"name":"factory","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"poolDeployer","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"refundNativeToken","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"selfPermit","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"nonce","type":"uint256"},{"internalType":"uint256","name":"expiry","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"selfPermitAllowed","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"nonce","type":"uint256"},{"internalType":"uint256","name":"expiry","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"selfPermitAllowedIfNecessary","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"value","type":"uint256"},{"internalType":"uint256","name":"deadline","type":"uint256"},{"internalType":"uint8","name":"v","type":"uint8"},{"internalType":"bytes32","name":"r","type":"bytes32"},{"internalType":"bytes32","name":"s","type":"bytes32"}],"name":"selfPermitIfNecessary","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"amountMinimum","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"}],"name":"sweepToken","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"address","name":"token","type":"address"},{"internalType":"uint256","name":"amountMinimum","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"feeBips","type":"uint256"},{"internalType":"address","name":"feeRecipient","type":"address"}],"name":"sweepTokenWithFee","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"amountMinimum","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"}],"name":"unwrapWNativeToken","outputs":[],"stateMutability":"payable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"amountMinimum","type":"uint256"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"feeBips","type":"uint256"},{"internalType":"address","name":"feeRecipient","type":"address"}],"name":"unwrapWNativeTokenWithFee","outputs":[],"stateMutability":"payable","type":"function"},
-    {"stateMutability":"payable","type":"receive"}
+    {"inputs": [], "name": "WNativeToken", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"},
+    {"inputs": [{"internalType": "int256", "name": "amount0Delta", "type": "int256"}, {"internalType": "int256", "name": "amount1Delta", "type": "int256"}, {"internalType": "bytes", "name": "_data", "type": "bytes"}], "name": "algebraSwapCallback", "outputs": [], "stateMutability": "nonpayable", "type": "function"},
+    {"inputs": [{"components": [{"internalType": "bytes", "name": "path", "type": "bytes"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint256", "name": "amountIn", "type": "uint256"}, {"internalType": "uint256", "name": "amountOutMinimum", "type": "uint256"}], "internalType": "struct ISwapRouter.ExactInputParams", "name": "params", "type": "tuple"}], "name": "exactInput", "outputs": [{"internalType": "uint256", "name": "amountOut", "type": "uint256"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"components": [{"internalType": "address", "name": "tokenIn", "type": "address"}, {"internalType": "address", "name": "tokenOut", "type": "address"}, {"internalType": "address", "name": "deployer", "type": "address"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint256", "name": "amountIn", "type": "uint256"}, {"internalType": "uint256", "name": "amountOutMinimum", "type": "uint256"}, {"internalType": "uint160", "name": "limitSqrtPrice", "type": "uint160"}], "internalType": "struct ISwapRouter.ExactInputSingleParams", "name": "params", "type": "tuple"}], "name": "exactInputSingle", "outputs": [{"internalType": "uint256", "name": "amountOut", "type": "uint256"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"components": [{"internalType": "address", "name": "tokenIn", "type": "address"}, {"internalType": "address", "name": "tokenOut", "type": "address"}, {"internalType": "address", "name": "deployer", "type": "address"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint256", "name": "amountIn", "type": "uint256"}, {"internalType": "uint256", "name": "amountOutMinimum", "type": "uint256"}, {"internalType": "uint160", "name": "limitSqrtPrice", "type": "uint160"}], "internalType": "struct ISwapRouter.ExactInputSingleParams", "name": "params", "type": "tuple"}], "name": "exactInputSingleSupportingFeeOnTransferTokens", "outputs": [{"internalType": "uint256", "name": "amountOut", "type": "uint256"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"components": [{"internalType": "bytes", "name": "path", "type": "bytes"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint256", "name": "amountOut", "type": "uint256"}, {"internalType": "uint256", "name": "amountInMaximum", "type": "uint256"}], "internalType": "struct ISwapRouter.ExactOutputParams", "name": "params", "type": "tuple"}], "name": "exactOutput", "outputs": [{"internalType": "uint256", "name": "amountIn", "type": "uint256"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"components": [{"internalType": "address", "name": "tokenIn", "type": "address"}, {"internalType": "address", "name": "tokenOut", "type": "address"}, {"internalType": "address", "name": "deployer", "type": "address"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint256", "name": "amountOut", "type": "uint256"}, {"internalType": "uint256", "name": "amountInMaximum", "type": "uint256"}, {"internalType": "uint160", "name": "limitSqrtPrice", "type": "uint160"}], "internalType": "struct ISwapRouter.ExactOutputSingleParams", "name": "params", "type": "tuple"}], "name": "exactOutputSingle", "outputs": [{"internalType": "uint256", "name": "amountIn", "type": "uint256"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [], "name": "factory", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"},
+    {"inputs": [{"internalType": "bytes[]", "name": "data", "type": "bytes[]"}], "name": "multicall", "outputs": [{"internalType": "bytes[]", "name": "results", "type": "bytes[]"}], "stateMutability": "payable", "type": "function"},
+    {"inputs": [], "name": "poolDeployer", "outputs": [{"internalType": "address", "name": "", "type": "address"}], "stateMutability": "view", "type": "function"},
+    {"inputs": [], "name": "refundNativeToken", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "value", "type": "uint256"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint8", "name": "v", "type": "uint8"}, {"internalType": "bytes32", "name": "r", "type": "bytes32"}, {"internalType": "bytes32", "name": "s", "type": "bytes32"}], "name": "selfPermit", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "nonce", "type": "uint256"}, {"internalType": "uint256", "name": "expiry", "type": "uint256"}, {"internalType": "uint8", "name": "v", "type": "uint8"}, {"internalType": "bytes32", "name": "r", "type": "bytes32"}, {"internalType": "bytes32", "name": "s", "type": "bytes32"}], "name": "selfPermitAllowed", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "nonce", "type": "uint256"}, {"internalType": "uint256", "name": "expiry", "type": "uint256"}, {"internalType": "uint8", "name": "v", "type": "uint8"}, {"internalType": "bytes32", "name": "r", "type": "bytes32"}, {"internalType": "bytes32", "name": "s", "type": "bytes32"}], "name": "selfPermitAllowedIfNecessary", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "value", "type": "uint256"}, {"internalType": "uint256", "name": "deadline", "type": "uint256"}, {"internalType": "uint8", "name": "v", "type": "uint8"}, {"internalType": "bytes32", "name": "r", "type": "bytes32"}, {"internalType": "bytes32", "name": "s", "type": "bytes32"}], "name": "selfPermitIfNecessary", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "amountMinimum", "type": "uint256"}, {"internalType": "address", "name": "recipient", "type": "address"}], "name": "sweepToken", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "address", "name": "token", "type": "address"}, {"internalType": "uint256", "name": "amountMinimum", "type": "uint256"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "feeBips", "type": "uint256"}, {"internalType": "address", "name": "feeRecipient", "type": "address"}], "name": "sweepTokenWithFee", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "uint256", "name": "amountMinimum", "type": "uint256"}, {"internalType": "address", "name": "recipient", "type": "address"}], "name": "unwrapWNativeToken", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"inputs": [{"internalType": "uint256", "name": "amountMinimum", "type": "uint256"}, {"internalType": "address", "name": "recipient", "type": "address"}, {"internalType": "uint256", "name": "feeBips", "type": "uint256"}, {"internalType": "address", "name": "feeRecipient", "type": "address"}], "name": "unwrapWNativeTokenWithFee", "outputs": [], "stateMutability": "payable", "type": "function"},
+    {"stateMutability": "payable", "type": "receive"}
 ]
 
 LIQUIDITY_ROUTER_ABI = [
@@ -176,22 +152,6 @@ LIQUIDITY_ROUTER_ABI = [
     }
 ]
 
-
-STAKING_ABI = [
-    {
-        "name": "stake",
-        "inputs": [{"name": "_amount", "type": "uint256"}],
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "name": "withdraw",
-        "inputs": [{"name": "_amount", "type": "uint256"}],
-        "outputs": [],
-        "type": "function"
-    }
-]
-
 VOTING_ABI = [
     {
         "name": "vote",
@@ -203,6 +163,11 @@ VOTING_ABI = [
         "type": "function"
     }
 ]
+
+# Note: The veSUMA contract likely requires a specific lock period to end before 'exit' can be called.
+# The `exit` function has a selector of `0x7f8661a1` and takes no parameters.
+# The `create_lock` function has a selector of `0x12e82674` and takes `_value` and `_unlock_time` as parameters.
+# We will use these selectors to manually build transactions, which is more reliable than a generic ABI.
 
 class SatsumaBot:
     def __init__(self):
@@ -224,7 +189,7 @@ class SatsumaBot:
             "usdc_address": Web3.to_checksum_address("0x2C8abD2A528D19AFc33d2eBA507c0F405c131335"),
             "wcbtc_address": Web3.to_checksum_address("0x8d0c9d1c17ae5e40fff9be350f57840e9e66cd93"),
             "suma_address": Web3.to_checksum_address("0xdE4251dd68e1aD5865b14Dd527E54018767Af58a"),
-            "vesuma_address": Web3.to_checksum_address("0x97a4f684620D578312Dc9fFBc4b0EbD8E804ab4a"), 
+            "vesuma_address": Web3.to_checksum_address("0x97a4f684620D578312Dc9fFBc4b0EbD8E804ab4a"),
             "voting_contract": Web3.to_checksum_address("0x1234567890123456789012345678901234567891"),
             "staking_contract": Web3.to_checksum_address("0x1234567890123456789012345678901234567892"),
             "gauge_address": Web3.to_checksum_address("0x1234567890123456789012345678901234567893")
@@ -259,7 +224,6 @@ class SatsumaBot:
             log.error("No valid private key found in environment variables")
             log.info("Please set PRIVATE_KEY_1 in your .env file with your actual private key")
             
-            # For demo purposes, ask for private key input
             key = input("Enter your private key (without 0x prefix): ")
             if not key:
                 sys.exit(1)
@@ -375,12 +339,17 @@ class SatsumaBot:
             amount_in_wei = int(amount_in * (10 ** token_in_info['decimals']))
             nonce = self.w3.eth.get_transaction_count(account.address)
             
-            # Prepare transactions to be included in multicall
-            token_contract = self.w3.eth.contract(address=token_in, abi=ERC20_ABI)
-            approve_tx = token_contract.functions.approve(self.config["swap_router"], amount_in_wei).build_transaction()
-
+            # --- Approve first ---
+            approval_result = await self.approve_token(account, token_in, self.config["swap_router"], amount_in_wei, nonce)
+            if not approval_result["success"]:
+                return {"success": False, "error": "Approval failed"}
+            
+            nonce = approval_result["nonce"]
+            
+            # --- Perform swap via multicall ---
             swap_router_contract = self.w3.eth.contract(address=self.config["swap_router"], abi=SWAP_ROUTER_ABI)
             deadline = int(time.time()) + 300
+            
             swap_params = {
                 "tokenIn": token_in,
                 "tokenOut": token_out,
@@ -391,16 +360,12 @@ class SatsumaBot:
                 "amountOutMinimum": 0,
                 "limitSqrtPrice": 0
             }
-            swap_tx = swap_router_contract.functions.exactInputSingle(swap_params).build_transaction()
             
-            # Encode transactions for multicall
-            encoded_approve_call = self.w3.eth.contract(address=token_in, abi=ERC20_ABI).functions.approve(self.config["swap_router"], amount_in_wei)._encode_transaction_data()
             encoded_swap_call = swap_router_contract.functions.exactInputSingle(swap_params)._encode_transaction_data()
-
-            multicall_contract = self.w3.eth.contract(address=self.config["swap_router"], abi=SWAP_ROUTER_ABI)
-            multicall_tx = multicall_contract.functions.multicall([encoded_approve_call, encoded_swap_call]).build_transaction({
+            
+            multicall_tx = swap_router_contract.functions.multicall([encoded_swap_call]).build_transaction({
                 "from": account.address,
-                "gas": 400000,
+                "gas": 500000, # Increased gas limit
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce
             })
@@ -457,7 +422,7 @@ class SatsumaBot:
                 amount_a_wei, amount_b_wei, 0, 0, deadline
             ).build_transaction({
                 "from": account.address,
-                "gas": 400000,
+                "gas": 500000, # Increased gas limit
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce
             })
@@ -508,9 +473,10 @@ class SatsumaBot:
             # --- STEP 2: Manually build and send the create_lock transaction using the specified selector ---
             log.processing("Manually building and sending veSUMA conversion transaction...")
             
+            # Selector for `create_lock` function
             selector = "0x12e82674"
             
-            # Correcting the ABI encoding method from w3.eth.abi to w3.abi
+            # Correcting the ABI encoding method
             encoded_params = self.w3.abi.encode(['uint256', 'uint256'], [amount_wei, unlock_time])
             
             # Combine the selector and the encoded parameters
@@ -519,7 +485,7 @@ class SatsumaBot:
             create_lock_tx = {
                 "from": account.address,
                 "to": self.config["vesuma_address"],
-                "gas": 500000,
+                "gas": 500000, # Increased gas limit
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce,
                 "data": tx_data
@@ -554,6 +520,7 @@ class SatsumaBot:
             log.info(f"Converting veSUMA to SUMA for {account.address}")
             
             # The selector for 'exit' is specified by the user as 0x7f8661a1
+            # Note: This transaction will likely fail if the lock period has not expired.
             selector = "0x7f8661a1"
             tx_data = selector
             
@@ -562,7 +529,7 @@ class SatsumaBot:
             exit_tx = {
                 "from": account.address,
                 "to": self.config["vesuma_address"],
-                "gas": 500000,
+                "gas": 500000, # Increased gas limit
                 "gasPrice": self.w3.eth.gas_price,
                 "nonce": nonce,
                 "data": tx_data
@@ -584,8 +551,8 @@ class SatsumaBot:
                 })
                 return {"success": True, "tx_hash": tx_hash.hex()}
             else:
-                log.error("veSUMA -> SUMA conversion failed")
-                return {"success": False, "error": "Transaction failed"}
+                log.error("veSUMA -> SUMA conversion failed: Transaction reverted, likely due to unexpired lock period.")
+                return {"success": False, "error": "Transaction failed, unexpired lock period"}
                 
         except Exception as e:
             log.error(f"veSUMA -> SUMA conversion error: {str(e)}")
@@ -599,23 +566,22 @@ class SatsumaBot:
             amount_wei = int(amount * 10**18)
             nonce = self.w3.eth.get_transaction_count(account.address)
             
-            # Encode approve and stake calls
-            vesuma_contract_erc20 = self.w3.eth.contract(address=self.config["vesuma_address"], abi=ERC20_ABI)
-            approve_call = vesuma_contract_erc20.functions.approve(self.config["staking_contract"], amount_wei)._encode_transaction_data()
+            # Manually build stake transaction using selector
+            # Stake selector: `0xb6b55f25` (stake(uint256))
+            selector = "0xb6b55f25"
+            encoded_params = self.w3.abi.encode(['uint256'], [amount_wei])
+            tx_data = selector + self.w3.to_hex(encoded_params)[2:]
             
-            staking_contract = self.w3.eth.contract(address=self.config["staking_contract"], abi=STAKING_ABI)
-            stake_call = staking_contract.functions.stake(amount_wei)._encode_transaction_data()
-
-            # Assuming multicall is available on the staking contract
-            multicall_contract = self.w3.eth.contract(address=self.config["staking_contract"], abi=SWAP_ROUTER_ABI)
-            multicall_tx = multicall_contract.functions.multicall([approve_call, stake_call]).build_transaction({
+            stake_tx = {
                 "from": account.address,
-                "gas": 400000,
+                "to": self.config["staking_contract"],
+                "gas": 500000,
                 "gasPrice": self.w3.eth.gas_price,
-                "nonce": nonce
-            })
+                "nonce": nonce,
+                "data": tx_data
+            }
             
-            signed_tx = self.w3.eth.account.sign_transaction(multicall_tx, private_key=private_key)
+            signed_tx = self.w3.eth.account.sign_transaction(stake_tx, private_key=private_key)
             tx_hash = self.w3.eth.send_raw_transaction(signed_tx.raw_transaction)
             
             log.processing("Waiting for staking confirmation...")
@@ -645,8 +611,8 @@ class SatsumaBot:
             
             nonce = self.w3.eth.get_transaction_count(account.address)
             
-            # Vote with veSUMA
             voting_contract = self.w3.eth.contract(address=self.config["voting_contract"], abi=VOTING_ABI)
+            
             vote_tx = voting_contract.functions.vote(gauge_address, weight).build_transaction({
                 "from": account.address,
                 "gas": 200000,
@@ -688,14 +654,9 @@ class SatsumaBot:
         
         for i in range(self.settings["transaction_count"]):
             try:
-                # Random token pair
                 token_in = random.choice(tokens)
                 token_out = random.choice([t for t in tokens if t != token_in])
-                
-                # Random amount
                 amount = self.generate_random_amount()
-                
-                # Random private key
                 private_key = random.choice(self.private_keys)
                 
                 log.info(f"Transaction {i+1}/{self.settings['transaction_count']}")
@@ -711,11 +672,8 @@ class SatsumaBot:
                 
                 self.settings["total_transactions"] += 1
                 self.settings["last_transaction_time"] = datetime.now().isoformat()
-                
-                # Save progress
                 self.save_user_settings()
                 
-                # Random delay between transactions
                 delay = random.uniform(5, 15)
                 log.info(f"Waiting {delay:.1f} seconds before next transaction...")
                 await asyncio.sleep(delay)
@@ -762,10 +720,8 @@ class SatsumaBot:
     async def show_balances(self):
         try:
             account = self.w3.eth.account.from_key(self.private_keys[0])
-            
             log.info(f"Showing balances for {account.address}")
             
-            # Get ETH balance
             eth_balance = self.w3.eth.get_balance(account.address)
             eth_formatted = self.w3.from_wei(eth_balance, 'ether')
             
@@ -773,7 +729,6 @@ class SatsumaBot:
             print(f"{Colors.WHITE}Address: {account.address}{Colors.RESET}")
             print(f"{Colors.GREEN}cBTC Balance: {eth_formatted:.6f} cBTC{Colors.RESET}")
             
-            # Get token balances
             tokens = {
                 "USDC": self.config["usdc_address"],
                 "WCBTC": self.config["wcbtc_address"],
@@ -799,7 +754,7 @@ class SatsumaBot:
         
         print(f"\n{Colors.CYAN}=== Transaction History ==={Colors.RESET}")
         
-        for i, tx in enumerate(self.transaction_history[-10:], 1):  # Show last 10 transactions
+        for i, tx in enumerate(self.transaction_history[-10:], 1):
             status_color = Colors.GREEN if tx["status"] == "success" else Colors.RED
             print(f"{Colors.WHITE}{i}. {tx['type'].upper()}{Colors.RESET}")
             print(f"   Status: {status_color}{tx['status']}{Colors.RESET}")
@@ -828,10 +783,6 @@ class SatsumaBot:
             
             elif option == "3":
                 print(f"\n{Colors.CYAN}=== Manual Swap ==={Colors.RESET}")
-                print("Token addresses:")
-                print(f"USDC: {self.config['usdc_address']}")
-                print(f"WCBTC: {self.config['wcbtc_address']}")
-                
                 token_in = input("Enter token in address: ").strip()
                 token_out = input("Enter token out address: ").strip()
                 
@@ -850,10 +801,6 @@ class SatsumaBot:
             
             elif option == "4":
                 print(f"\n{Colors.CYAN}=== Add Liquidity ==={Colors.RESET}")
-                print("Token addresses:")
-                print(f"USDC: {self.config['usdc_address']}")
-                print(f"WCBTC: {self.config['wcbtc_address']}")
-                
                 token_a = input("Enter token A address: ").strip()
                 token_b = input("Enter token B address: ").strip()
                 
