@@ -178,23 +178,25 @@ LIQUIDITY_ROUTER_ABI = [
 
 # Updated VESUMA_ABI to match the new function call and selector
 VESUMA_ABI = [
-    {
-        "name": "create_lock",
-        "inputs": [
-            {"name": "_value", "type": "uint256"},
-            {"name": "_unlock_time", "type": "uint256"}
-        ],
-        "outputs": [],
-        "type": "function"
-    },
-    {
-        "name": "increase_amount",
-        "inputs": [{"name": "_value", "type": "uint256"}],
-        "outputs": [],
-        "type": "function"
-    }
+  {
+    "inputs":[
+      {"name":"_value","type":"uint256"},
+      {"name":"_unlock_time","type":"uint256"}
+    ],
+    "name":"create_lock",
+    "outputs":[],
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "inputs":[{"name":"_value","type":"uint256"}],
+    "name":"increase_amount",
+    "outputs":[],
+    "stateMutability":"nonpayable",
+    "type":"function"
+  }
 ]
-
+ 
 STAKING_ABI = [
     {
         "name": "stake",
