@@ -178,15 +178,24 @@ LIQUIDITY_ROUTER_ABI = [
 
 # The correct ABI for a standard `ve-token` contract's `create_lock` function
 VESUMA_ABI = [
-    {
-        "name": "create_lock",
-        "inputs": [
-            {"name": "_value", "type": "uint256"},
-            {"name": "_unlock_time", "type": "uint256"}
-        ],
-        "outputs": [],
-        "type": "function"
-    }
+    [
+  {
+    "name": "lock",
+    "inputs": [
+      {"name": "amount", "type": "uint256"},
+      {"name": "lockDuration", "type": "uint256"}
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "name": "balanceOf",
+    "inputs": [{"name": "account", "type": "address"}],
+    "outputs": [{"name": "", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  }
 ]
 
 STAKING_ABI = [
